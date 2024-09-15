@@ -37,6 +37,8 @@ local.properties
 .factorypath
 /src/main/resources/rebel.xml
 
+out/
+
 # External tool builders
 .externalToolBuilders/**
 
