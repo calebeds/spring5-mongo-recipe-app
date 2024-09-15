@@ -7,7 +7,6 @@ import guru.springframework.domain.Recipe;
 import guru.springframework.repositories.reactive.RecipeReactiveRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -54,15 +53,16 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    @Transactional
-    public Mono<RecipeCommand> saveRecipeCommand(RecipeCommand command) {
+    public Mono<RecipeCommand>  saveRecipeCommand(RecipeCommand command) {
 
         return recipeReactiveRepository.save(recipeCommandToRecipe.convert(command))
                 .map(recipeToRecipeCommand::convert);
     }
 
     @Override
-    public void deleteById(String idToDelete) {
+    public Mono<Void> deleteById(String idToDelete) {
         recipeReactiveRepository.deleteById(idToDelete).block();
+
+        return Mono.empty();
     }
 }
